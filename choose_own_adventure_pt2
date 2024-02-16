@@ -1,0 +1,96 @@
+import random
+
+def roll_d4():
+    d4 = random.randint(1, 4)
+    print('You rolled', d4)
+
+def roll_d6():
+    d6 = random.randint(1, 6)
+    print('You rolled', d6)
+
+def roll_d10():
+    d10 = random.randint(1, 10)
+    print('You rolled', d10)
+
+def roll_d12():
+    d12 = random.randint(1, 12)
+    print('You rolled', d12)
+
+def roll_d20():
+    d20 = random.randint(1, 20)
+    print('You rolled', d20)
+    return d20  # Return the result
+
+name = input('Type your name: \n')
+print('Welcome', name, 'to the game. It is incredibly important that you follow the instructions to a T; if you do not, the consequences may be dire.\n')
+
+print('Please divide 5 stats between the following options. The stats must add up to 5 to continue. \n')
+
+def distribute_points():
+    attributes = ['charisma', 'strength', 'dexterity', 'constitution', 'wisdom', 'intelligence']
+    points_left = 5
+    attribute_points = {}
+
+    for attribute in attributes:
+        valid_input = False
+
+        while not valid_input:
+            try:
+                points = int(input(f"Enter points for {attribute} (0 to {points_left}): "))
+
+                if 0 <= points <= points_left:
+                    attribute_points[attribute] = points
+                    points_left -= points
+                    valid_input = True
+                else:
+                    print(f"Invalid input! Please enter a number between 0 and {points_left}.")
+
+            except ValueError:
+                print("Invalid input! Please enter a valid number.")
+
+    return attribute_points
+
+if __name__ == "__main__":
+    allocated_points = distribute_points()
+    print("\nPoints distribution:")
+    for attribute, points in allocated_points.items():
+        print(f"{attribute}: {points}")
+
+
+def going_left():  # traveling left
+    l1 = input('The trees thin after traveling for some time, leading you to a small clearing lit by the sun scattering through the treetops. Stealth check. Press enter to roll a D20. \n')
+    # dice roller
+    stealth_plain = roll_d20()
+    stealth_result = roll_d20() + allocated_points.get('dexterity', 0)
+    if stealth_plain == 1:  # critical fail
+        left_2 = input('You manage to trip over a rock and crack your head on a rock. Game over. To start over enter 1, to exit enter 2. \n')
+        if left_2 == '1':
+            print('Starting over...')
+            return
+        elif left_2 == '2':
+            print('Ending game.')
+        else:
+            print('You should learn how to read instructions.')
+
+    elif stealth_result >= 20:
+        left_3 = input('You stealth so well that not even the gods can find you, you spot the orc sitting on a stump, humming to himself. Enter 1 to attack, 2 to speak to him, or 3 to attempt to slide by him.')
+
+    elif stealth_result >= 12:
+        left_4 = input('You are able to sneak into the clearing and you spot an orc sitting in the middle of the clearing on a stump. His back is to you and he is sharpening a blade. Enter 1 to attack or 2 to speak to him.')
+
+        if left_4 == '1':
+            print()
+        elif left_4 == '2':
+            print()
+        else:
+            print()
+
+    else:
+        left_5 = input('You enter the clearing and see an orc staring at you. Tusks jutting out of his mouth as his eyes sweep across you.')
+
+answer = input('You are in the middle of a forest. The only items you have on your person are leather armor and a shortsword. The path you are taking splits into two separate routes. Would you like to go left or right? \n').lower()
+
+if answer == 'left':
+    going_left()
+else:
+    print()
